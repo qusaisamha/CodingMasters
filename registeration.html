@@ -1,0 +1,210 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register and Training Course</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS -->
+    <style>
+        /* Validation feedback styles */
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .valid {
+            border-color: green;
+        }
+        .invalid {
+            border-color: red;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-top: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #FF914D;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="code_masters.html" class="button">Home Page</a>
+        <br><br>
+
+        <!-- Registration Form -->
+        <form id="registerForm" novalidate>
+            <h2>Register</h2>
+            <div class="form-group">
+                <label for="inputName">Full Name</label>
+                <input type="text" class="form-control" id="inputName">
+                <span class="error" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" id="inputEmail4">
+                <span class="error" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword4">Password</label>
+                <input type="password" class="form-control" id="inputPassword4">
+                <span class="error" id="passwordError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                <span class="error" id="addressError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity">
+                <span class="error" id="cityError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputState">State</label>
+                <select id="inputState" class="form-control">
+                    <option value="" selected>Choose...</option>
+                    <option value="Amman">Amman</option>
+                    <option value="Zarqaa">Zarqaa</option>
+                </select>
+                <span class="error" id="stateError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip">
+                <span class="error" id="zipError"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        <br><br>
+
+        <!-- Training Course Form -->
+        <form id="courseForm">
+            <h2>Select Training Course</h2>
+            <div class="form-group">
+                <label>Select Training Course:</label><br>
+                <input type="radio" id="java" name="course" value="java">
+                <label for="java">Java</label><br>
+                <input type="radio" id="c++" name="course" value="c++">
+                <label for="c++">C++</label><br>
+                <input type="radio" id="python" name="course" value="python">
+                <label for="python">Python</label>
+                <span class="error" id="courseError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="months">Enter Number of Months:</label><br>
+                <input type="number" id="months" class="form-control" min="1" placeholder="e.g., 3">
+                <span class="error" id="monthsError"></span>
+            </div>
+
+            <button type="button" id="calculateButton" class="btn btn-info">Calculate</button><br><br>
+
+            <label>Report:</label>
+            <textarea id="report" readonly></textarea>
+        </form>
+    </div>
+
+    <script>
+        // Registration Form Validation
+        document.getElementById("registerForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const nameField = document.getElementById("inputName");
+            const emailField = document.getElementById("inputEmail4");
+            const passwordField = document.getElementById("inputPassword4");
+            const addressField = document.getElementById("inputAddress");
+            const cityField = document.getElementById("inputCity");
+            const stateField = document.getElementById("inputState");
+            const zipField = document.getElementById("inputZip");
+
+            const fields = [
+                { field: nameField, error: "nameError", message: "Name is required." },
+                { field: emailField, error: "emailError", message: "Valid email is required." },
+                { field: passwordField, error: "passwordError", message: "Password is required." },
+                { field: addressField, error: "addressError", message: "Address is required." },
+                { field: cityField, error: "cityError", message: "City is required." },
+                { field: stateField, error: "stateError", message: "State is required." },
+                { field: zipField, error: "zipError", message: "Zip code is required." },
+            ];
+
+            let isValid = true;
+
+            fields.forEach(({ field, error, message }) => {
+                const errorSpan = document.getElementById(error);
+                if (!field.value.trim()) {
+                    errorSpan.textContent = message;
+                    field.classList.add("invalid");
+                    isValid = false;
+                } else {
+                    errorSpan.textContent = "";
+                    field.classList.remove("invalid");
+                }
+            });
+
+            if (isValid) alert("Registration Successful!");
+        });
+
+        // Course Calculation
+        document.getElementById("calculateButton").addEventListener("click", function () {
+            const course = document.querySelector('input[name="course"]:checked');
+            const months = document.getElementById("months").value.trim();
+            const name = document.getElementById("inputName").value.trim(); // Get the name value
+            const courseError = document.getElementById("courseError");
+            const monthsError = document.getElementById("monthsError");
+            const report = document.getElementById("report");
+
+            courseError.textContent = "";
+            monthsError.textContent = "";
+            report.value = "";
+
+            if (!course) courseError.textContent = "Please select a course.";
+            if (!months || isNaN(months) || months < 1) monthsError.textContent = "Please enter a valid number of months.";
+
+            if (course && months > 0) {
+                const baseCost = 5 * months;
+                const percentage = course.value === "java" ? 10 : course.value === "c++" ? 5 : 20;
+                const additionalCost = (baseCost * percentage) / 100;
+                const totalCost = baseCost + additionalCost;
+
+                // Update the report with the user's name and the other information
+                report.value = 
+`Name: ${name}
+Selected Course: ${course.value.toUpperCase()}
+Duration: ${months} months
+Base Cost: $${baseCost.toFixed(2)}
+Additional Cost (${percentage}%): $${additionalCost.toFixed(2)}
+Total Cost: $${totalCost.toFixed(2)}`
+                .trim();
+            }
+        });
+    </script>
+
+    <!-- Bootstrap JS (Optional for additional functionality) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

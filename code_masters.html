@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Masters</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS (Your existing CSS) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Date and Time Display -->
+  <div id="date-time" class="date-time"></div> 
+
+  <header>
+    <div class="header">
+      <div class="logo">
+        <img src="picture1.png" alt="Code Masters Logo" width="100" height="100">
+      </div>
+      <h1 class="title">Code Masters</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Buttons (use Bootstrap's Button classes for responsiveness) -->
+      <div class="buttons mb-4">
+        <a href="About-us.html" class="btn btn-primary">About Us</a>
+        <a href="#" class="btn btn-primary" onclick="checkAccess(); return false;">Training Courses</a> 
+        <a href="Image_Gallery.html" class="btn btn-primary">Gallery</a>
+        <a href="Success-Stories.html" class="btn btn-primary">Success Stories</a>
+        <a href="recources-library.html" class="btn btn-primary">Resource Library</a>
+      </div>
+
+      <!-- Main Content -->
+      <p>Welcome to <span style="color: #FF914D;">Code Masters</span>!</p>
+      <p>Whether you are a beginner or an experienced developer, we are here to help you master the art of coding.</p>
+      <p>Our comprehensive courses, expert instructors, and supportive community will guide you every step of the way. Join us and unlock your potential!</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        <a href="Contact-Us.html"><strong>Contact us</strong></a>
+        <br>
+        <a href="#" class="btn btn-secondary" onclick="checkAccess(); return false;">Login</a>
+        <a href="registeration.html" class="btn btn-secondary">Register</a> 
+      </p>
+      <br>
+      <p>
+        <a href="https://www.Facebook.com" class="btn btn-link">Facebook</a>
+        <a href="https://www.instagram.com" class="btn btn-link">Instagram</a>
+      </p>
+      <br><br>
+      <p>This website was first launched in the summer of 2020.</p>
+    </div>
+  </footer>
+  <script>
+    function checkAccess() {
+      const wantToRegister = confirm("You need to login to access the training courses. Would you like to register now?");
+
+      if (wantToRegister) {
+        const name = prompt("Please enter your full name:");
+        if (!name) return; // User cancelled
+
+        const email = prompt("Please enter your email:");
+        if (!email) return; // User cancelled
+
+        const password = prompt("Please enter your password:");
+        if (!password) return; // User cancelled
+
+        // Store user data (assumed for demonstration purposes)
+        localStorage.setItem('isRegistered', 'true');
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userEmail', email);
+
+        alert("Registration successful! You can now access the training courses.");
+        window.location.href = 'Training_Courses.html'; // Redirect to training courses page
+      } else {
+        alert("You can access the training courses only after loging in.");
+      }
+    }
+  </script>
+  <!-- Bootstrap JS (Optional for additional functionality) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to update the current date and time
+    function updateDateTime() {
+        const now = new Date();
+        const options = {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        };
+        const dateTimeString = now.toLocaleDateString('en-US', options);
+        document.getElementById('date-time').textContent = dateTimeString;
+    }
+
+    // Update the date and time every second
+    setInterval(updateDateTime, 1000);
+
+    // Call the function initially to display immediately
+    updateDateTime();
+  </script>
+</body>
+</html>
